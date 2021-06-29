@@ -1,78 +1,74 @@
-const hour = document.querySelector(".hour")
-const minute = document.querySelector(".minute")
-const second = document.querySelector(".second")
+const hour = document.querySelector(".hour");
+const minute = document.querySelector(".minute");
+const second = document.querySelector(".second");
 // let secondValue;
 // second.addEventListener("input", (e) => {
 //     secondValue = e.target.value;
 //     console.log(secondValue);
 // });
 let intervalId;
-const start = document.querySelector(".start")
-start.addEventListener("click", (e)=>{
-    start.disabled = true
-    intervalId = setInterval((e)=>{
-    console.log(second.value, minute.value, hour.value);
+const start = document.querySelector(".start");
+start.addEventListener("click", (e) => {
+  let hourValue = +hour.value;
+  let minuteValue = +minute.value;
+  let secondValue = +second.value;
 
-        if(second.value === "0" && minute.value === "0" && hour.value === "0"){
-            clearInterval(intervalId)
+  start.disabled = true;
+  intervalId = setInterval((e) => {
+    console.log(secondValue, minuteValue, hourValue);
+    if (!secondValue && !minuteValue && !hourValue) {
+      clearInterval(intervalId);
+    } else {
+      if (secondValue) {
+        secondValue--;
+      }
+      if (!secondValue && (minuteValue || hourValue)) {
+        secondValue = 59;
+        if (minuteValue) {
+          minuteValue--;
         }
-
-        if(second.value === '') {
-            second.value = '60';
-            minute.value--;
+        if (!minuteValue && hourValue) {
+          hourValue--;
+          minuteValue = 59;
         }
-
-        second.value--; 
-        
-        if(second.value - 1 < 0 ){
-            second.value = "";
-            if(second.value === "" && minute.value === ""){
-                hour.value--
-                minute.value = 59
-                second.value = 59
-            }
-            if(second.value === "" && minute.value > ""){
-                minute.value --
-                second.value = 59
-            }
-            
-        } 
-}, 1000);
-})
-
-const stop = document.querySelector(".stop")
-stop.addEventListener("click", (e)=>{
-    clearInterval(intervalId)
-    start.disabled = false
-
-    })
-
-const reset = document.querySelector(".reset")
-reset.addEventListener("click", (e)=>{
-    clearInterval(intervalId)
-    second.value = "";
-    minute.value = "";
-    hour.value = "";
-    start.disabled = false
-})
-
-second.addEventListener('focusout', () => {
-    if(second.value > 59){
-        minute.value = Math.floor(second.value/60)
-        second.value = second.value % 60
+      }
     }
+    second.value = secondValue || "00";
+    minute.value = minuteValue || "00";
+    hour.value = hourValue || "00";
+  }, 1000);
+});
+
+const stop = document.querySelector(".stop");
+stop.addEventListener("click", (e) => {
+  clearInterval(intervalId);
+  start.disabled = false;
+});
+
+const reset = document.querySelector(".reset");
+reset.addEventListener("click", (e) => {
+  clearInterval(intervalId);
+  second.value = "";
+  minute.value = "";
+  hour.value = "";
+  start.disabled = false;
+});
+
+second.addEventListener("focusout", () => {
+  if (second.value > 59) {
+    minute.value = Math.floor(second.value / 60);
+    second.value = second.value % 60;
+  }
 });
 // --------------- second end-----------------------
 
 // --------------- minute start-----------------------
 
-minute.addEventListener('focusout', () => {
-    if(minute.value > 59){
-        hour.value = Math.floor(minute.value/60)
-        minute.value = minute.value % 60
-    }
+minute.addEventListener("focusout", () => {
+  if (minute.value > 59) {
+    hour.value = Math.floor(minute.value / 60);
+    minute.value = minute.value % 60;
+  }
 });
 
-
 // --------------- minute end-----------------------
-
