@@ -1,11 +1,6 @@
 const hour = document.querySelector(".hour");
 const minute = document.querySelector(".minute");
 const second = document.querySelector(".second");
-// let secondValue;
-// second.addEventListener("input", (e) => {
-//     secondValue = e.target.value;
-//     console.log(secondValue);
-// });
 let intervalId;
 const start = document.querySelector(".start");
 start.addEventListener("click", (e) => {
@@ -15,7 +10,6 @@ start.addEventListener("click", (e) => {
 
   start.disabled = true;
   intervalId = setInterval((e) => {
-    console.log(secondValue, minuteValue, hourValue);
     if (!secondValue && !minuteValue && !hourValue) {
       clearInterval(intervalId);
     } else {
